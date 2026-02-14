@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRICK A4IF | SECURE AI</title>
+    <style>
+        body { background: #020617; color: #f8fafc; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .box { background: #1e293b; padding: 40px; border-radius: 20px; border: 2px solid #0ea5e9; text-align: center; width: 350px; box-shadow: 0 0 30px rgba(14, 165, 233, 0.3); }
+        h1 { color: #0ea5e9; font-size: 26px; margin-bottom: 5px; letter-spacing: 2px; }
+        p { color: #94a3b8; font-size: 13px; margin-bottom: 25px; }
+        input { width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #334155; background: #0f172a; color: white; box-sizing: border-box; outline: none; font-size: 16px; text-align: center; }
+        button { background: #0ea5e9; color: white; border: none; padding: 14px; border-radius: 10px; cursor: pointer; width: 100%; font-weight: bold; font-size: 16px; transition: 0.3s; }
+        button:hover { background: #0284c7; transform: scale(1.02); }
+        #status { font-size: 13px; margin-top: 20px; font-weight: 500; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>🛡️ TRICK A4IF</h1>
+        <p>ADVANCED AI GATEWAY</p>
+        <input type="password" id="pass" placeholder="অ্যাডমিন পাসওয়ার্ড দিন">
+        <button onclick="login()">সার্ভার এক্সেস করুন</button>
+        <div id="status" style="color: #64748b;">সিস্টেম স্ট্যাটাস: রেডি 🟢</div>
+    </div>
+
+    <script>
+        async function login() {
+            const password = document.getElementById('pass').value;
+            const status = document.getElementById('status');
+            
+            if(!password) {
+                status.style.color = "#ef4444";
+                status.innerText = "পাসওয়ার্ড বক্স খালি!";
+                return;
+            }
+
+            status.style.color = "#0ea5e9";
+            status.innerText = "সার্ভারের সাথে কানেক্ট হচ্ছে...";
+            
+            // আপনার সচল রেন্ডার লিঙ্কটি এখানে দেওয়া হয়েছে
+            const API_BASE = "https://trick-a4if-advanced-ai-2.onrender.com"; 
+
+            try {
+                const res = await fetch(`${API_BASE}/api/login`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ password })
+                });
+                
+                const data = await res.json();
+                
+                if(res.ok && data.token) {
+                    status.style.color = "#22c55e";
+                    status.innerText = "লগইন সফল! আপনার টেলিগ্রামে অ্যালার্ট পাঠানো হয়েছে।";
+                    localStorage.setItem('token', data.token);
+                    // এখানে চ্যাট পেজ লোড করার কোড যোগ করা যাবে
+                } else {
+                    status.style.color = "#ef4444";
+                    status.innerText = "ভুল পাসওয়ার্ড! এক্সেস ডিনাইড।";
+                }
+            } catch (e) {
+                status.style.color = "#ef4444";
+                status.innerText = "সার্ভার কানেকশন এরর! রেন্ডার লগ চেক করুন।";
+            }
+        }
+    </script>
+</body>
+</html>
