@@ -3,65 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRICK A4IF | SECURE AI</title>
+    <title>TRICK A4IF | OPEN AI</title>
     <style>
-        body { background: #020617; color: #f8fafc; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .box { background: #1e293b; padding: 40px; border-radius: 20px; border: 2px solid #0ea5e9; text-align: center; width: 350px; box-shadow: 0 0 30px rgba(14, 165, 233, 0.3); }
-        h1 { color: #0ea5e9; font-size: 26px; margin-bottom: 5px; letter-spacing: 2px; }
-        p { color: #94a3b8; font-size: 13px; margin-bottom: 25px; }
-        input { width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #334155; background: #0f172a; color: white; box-sizing: border-box; outline: none; font-size: 16px; text-align: center; }
-        button { background: #0ea5e9; color: white; border: none; padding: 14px; border-radius: 10px; cursor: pointer; width: 100%; font-weight: bold; font-size: 16px; transition: 0.3s; }
-        button:hover { background: #0284c7; transform: scale(1.02); }
-        #status { font-size: 13px; margin-top: 20px; font-weight: 500; }
+        body { background: #020617; color: white; font-family: sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        #chat-container { width: 95%; max-width: 600px; height: 90vh; background: #1e293b; border-radius: 20px; border: 1px solid #0ea5e9; display: flex; flex-direction: column; overflow: hidden; }
+        #msgs { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .msg { padding: 12px; border-radius: 12px; font-size: 14px; max-width: 80%; }
+        .user { background: #0ea5e9; align-self: flex-end; }
+        .ai { background: #334155; align-self: flex-start; border-left: 4px solid #0ea5e9; }
+        .input-area { padding: 15px; background: #0f172a; display: flex; gap: 10px; }
+        input { flex: 1; padding: 12px; border-radius: 8px; border: none; background: #1e293b; color: white; outline: none; }
+        button { background: #0ea5e9; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
-    <div class="box">
-        <h1>🛡️ TRICK A4IF</h1>
-        <p>ADVANCED AI GATEWAY</p>
-        <input type="password" id="pass" placeholder="অ্যাডমিন পাসওয়ার্ড দিন">
-        <button onclick="login()">সার্ভার এক্সেস করুন</button>
-        <div id="status" style="color: #64748b;">সিস্টেম স্ট্যাটাস: রেডি 🟢</div>
+    <div id="chat-container">
+        <div style="background: #0ea5e9; padding: 15px; text-align: center; font-weight: bold;">🛡️ TRICK A4IF PUBLIC AI</div>
+        <div id="msgs"></div>
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="আপনার প্রশ্নটি লিখুন...">
+            <button onclick="send()">পাঠান</button>
+        </div>
     </div>
 
     <script>
-        async function login() {
-            const password = document.getElementById('pass').value;
-            const status = document.getElementById('status');
-            
-            if(!password) {
-                status.style.color = "#ef4444";
-                status.innerText = "পাসওয়ার্ড বক্স খালি!";
-                return;
-            }
+        const API = "https://trick-a4if-advanced-ai-2.onrender.com"; 
+        async function send() {
+            const input = document.getElementById('userInput');
+            const msgsDiv = document.getElementById('msgs');
+            if(!input.value) return;
 
-            status.style.color = "#0ea5e9";
-            status.innerText = "সার্ভারের সাথে কানেক্ট হচ্ছে...";
-            
-            // আপনার সচল রেন্ডার লিঙ্কটি এখানে দেওয়া হয়েছে
-            const API_BASE = "https://trick-a4if-advanced-ai-2.onrender.com"; 
+            const text = input.value;
+            msgsDiv.innerHTML += `<div class="msg user">${text}</div>`;
+            input.value = "";
+            msgsDiv.scrollTop = msgsDiv.scrollHeight;
 
             try {
-                const res = await fetch(`${API_BASE}/api/login`, {
+                const res = await fetch(`${API}/api/chat`, {
                     method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ password })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ messages: [{role: "user", content: text}] })
                 });
-                
                 const data = await res.json();
-                
-                if(res.ok && data.token) {
-                    status.style.color = "#22c55e";
-                    status.innerText = "লগইন সফল! আপনার টেলিগ্রামে অ্যালার্ট পাঠানো হয়েছে।";
-                    localStorage.setItem('token', data.token);
-                    // এখানে চ্যাট পেজ লোড করার কোড যোগ করা যাবে
-                } else {
-                    status.style.color = "#ef4444";
-                    status.innerText = "ভুল পাসওয়ার্ড! এক্সেস ডিনাইড।";
-                }
+                msgsDiv.innerHTML += `<div class="msg ai">🛡️ <b>AI:</b> ${data.reply}</div>`;
+                msgsDiv.scrollTop = msgsDiv.scrollHeight;
             } catch (e) {
-                status.style.color = "#ef4444";
-                status.innerText = "সার্ভার কানেকশন এরর! রেন্ডার লগ চেক করুন।";
+                msgsDiv.innerHTML += `<div style="color:red">সার্ভার ব্যস্ত, পরে চেষ্টা করুন।</div>`;
             }
         }
     </script>
