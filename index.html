@@ -7,27 +7,27 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="chat-container">
+
+    <div id="chat-container">
         <header>
             <h2>TRICK ARIF <span>v18.1</span></h2>
             <p>International Tech News specialist</p>
         </header>
         <div id="chat-box"></div>
-        <div id="preview-box" class="hidden"><img id="preview-img"><button id="close-preview">✕</button></div>
         <div class="input-area">
-            <label for="img-input">📷</label>
-            <input type="file" id="img-input" accept="image/*" hidden>
             <input type="text" id="user-input" placeholder="Type your message...">
-            <button id="send-btn">➤</button>
+            <button id="send-btn">Send</button>
         </div>
     </div>
+
     <div id="debug-widget">
-        <div class="header">SYSTEM MONITOR</div>
+        <div style="font-weight:bold; border-bottom:1px solid; margin-bottom:5px">SYSTEM MONITOR</div>
         <div>Trace: <span id="trace-id">-------</span></div>
         <div>Latency: <span id="latency">0ms</span></div>
         <div>Quota: <span id="usage">0</span></div>
         <div class="online">● Cluster Active</div>
     </div>
-    <script src="script.js"></script>
+
+    <script src="script.js" defer></script>
 </body>
 </html>
