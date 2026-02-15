@@ -1,7 +1,7 @@
 {
   "name": "trick-arif-saas-core",
   "version": "18.1.0",
-  "description": "Enterprise Hybrid AI Engine with Distributed Control & Tracking",
+  "description": "Enterprise Hybrid AI Engine with Distributed Control, IP Tracking & Admin Bot",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
