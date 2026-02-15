@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRICK A4IF | OPEN AI</title>
+    <title>TRICK A4IF | AI PANEL</title>
     <style>
-        body { background: #020617; color: white; font-family: sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; }
-        #chat-container { width: 95%; max-width: 600px; height: 90vh; background: #1e293b; border-radius: 20px; border: 1px solid #0ea5e9; display: flex; flex-direction: column; overflow: hidden; }
-        #msgs { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .msg { padding: 12px; border-radius: 12px; font-size: 14px; max-width: 80%; }
+        body { background: #020617; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
+        #chat-container { width: 95%; max-width: 650px; height: 90vh; background: #1e293b; border-radius: 20px; border: 1px solid #0ea5e9; display: flex; flex-direction: column; box-shadow: 0 0 40px rgba(14, 165, 233, 0.2); }
+        #msgs { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+        .msg { padding: 12px 16px; border-radius: 12px; font-size: 14.5px; line-height: 1.5; max-width: 80%; }
         .user { background: #0ea5e9; align-self: flex-end; }
         .ai { background: #334155; align-self: flex-start; border-left: 4px solid #0ea5e9; }
         .input-area { padding: 15px; background: #0f172a; display: flex; gap: 10px; }
-        input { flex: 1; padding: 12px; border-radius: 8px; border: none; background: #1e293b; color: white; outline: none; }
-        button { background: #0ea5e9; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        input { flex: 1; padding: 12px; border-radius: 10px; border: none; background: #1e293b; color: white; outline: none; font-size: 15px; }
+        button { background: #0ea5e9; color: white; border: none; padding: 12px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
     <div id="chat-container">
-        <div style="background: #0ea5e9; padding: 15px; text-align: center; font-weight: bold;">🛡️ TRICK A4IF PUBLIC AI</div>
+        <div style="background: #0ea5e9; padding: 15px; text-align: center; font-weight: bold;">🛡️ TRICK A4IF AI PANEL</div>
         <div id="msgs"></div>
         <div class="input-area">
             <input type="text" id="userInput" placeholder="আপনার প্রশ্নটি লিখুন...">
@@ -27,7 +27,9 @@
     </div>
 
     <script>
+        // আপনার লাইভ রেন্ডার লিঙ্কটি এখানে নিশ্চিত করুন
         const API = "https://trick-a4if-advanced-ai-2.onrender.com"; 
+
         async function send() {
             const input = document.getElementById('userInput');
             const msgsDiv = document.getElementById('msgs');
@@ -45,10 +47,14 @@
                     body: JSON.stringify({ messages: [{role: "user", content: text}] })
                 });
                 const data = await res.json();
-                msgsDiv.innerHTML += `<div class="msg ai">🛡️ <b>AI:</b> ${data.reply}</div>`;
+                
+                if (data.reply) {
+                    msgsDiv.innerHTML += `<div class="msg ai">🛡️ <b>AI:</b> ${data.reply}</div>`;
+                } else { throw new Error(); }
+                
                 msgsDiv.scrollTop = msgsDiv.scrollHeight;
             } catch (e) {
-                msgsDiv.innerHTML += `<div style="color:red">সার্ভার ব্যস্ত, পরে চেষ্টা করুন।</div>`;
+                msgsDiv.innerHTML += `<div style="color:#ef4444; font-size:12px; text-align:center;">সার্ভার ব্যস্ত, আবার চেষ্টা করুন।</div>`;
             }
         }
     </script>
