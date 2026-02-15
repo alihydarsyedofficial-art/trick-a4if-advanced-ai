@@ -1,17 +1,31 @@
 {
-  "name": "trick-a4if-advanced-ai",
-  "version": "5.5.0",
-  "description": "Premium Tracker AI by TRICK A4IF",
+  "name": "trick-arif-saas-core",
+  "version": "18.1.0",
+  "description": "Enterprise Hybrid AI Engine with Distributed Control & Tracking",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
+  "author": "Arifull Islam",
+  "license": "MIT",
   "dependencies": {
     "express": "^4.18.2",
     "axios": "^1.6.2",
-    "cors": "^2.8.5"
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "express-rate-limit": "^7.1.5",
+    "rate-limit-redis": "^4.0.0",
+    "ioredis": "^5.3.0",
+    "form-data": "^4.0.0",
+    "crypto": "^1.0.1",
+    "pino": "^8.16.2",
+    "pino-pretty": "^10.2.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=16.0.0"
   }
 }
