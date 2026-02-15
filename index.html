@@ -1,33 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRICK ARIF v18.1</title>
-    <link rel="stylesheet" href="style.css">
+    <title>TRICK ARIF | AI PANEL</title>
+    <style>
+        body { background: #020617; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
+        #chat-container { width: 95%; max-width: 650px; height: 92vh; background: #1e293b; border-radius: 20px; border: 1px solid #0ea5e9; display: flex; flex-direction: column; box-shadow: 0 0 40px rgba(14, 165, 233, 0.3); }
+        #msgs { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+        .msg { padding: 12px 18px; border-radius: 15px; font-size: 15px; max-width: 85%; }
+        .user { background: #0ea5e9; align-self: flex-end; }
+        .ai { background: #334155; align-self: flex-start; border-left: 5px solid #0ea5e9; }
+        .input-area { padding: 15px; background: #0f172a; display: flex; gap: 10px; border-radius: 0 0 20px 20px; }
+        input { flex: 1; padding: 12px; border-radius: 10px; border: none; background: #1e293b; color: white; outline: none; }
+        button { background: #0ea5e9; color: white; border: none; padding: 12px 25px; border-radius: 10px; cursor: pointer; font-weight: bold; }
+    </style>
 </head>
 <body>
-
     <div id="chat-container">
-        <header>
-            <h2>TRICK ARIF <span>v18.1</span></h2>
-            <p>International Tech News specialist</p>
-        </header>
-        <div id="chat-box"></div>
+        <div style="background: #0ea5e9; padding: 15px; text-align: center; font-weight: bold;">🛡️ TRICK ARIF AI (PRIVATE ACCESS)</div>
+        <div id="msgs"></div>
         <div class="input-area">
-            <input type="text" id="user-input" placeholder="Type your message...">
-            <button id="send-btn">Send</button>
+            <input type="text" id="userInput" placeholder="আপনার প্রশ্নটি এখানে লিখুন...">
+            <button onclick="send()">পাঠান</button>
         </div>
     </div>
 
-    <div id="debug-widget">
-        <div style="font-weight:bold; border-bottom:1px solid; margin-bottom:5px">SYSTEM MONITOR</div>
-        <div>Trace: <span id="trace-id">-------</span></div>
-        <div>Latency: <span id="latency">0ms</span></div>
-        <div>Quota: <span id="usage">0</span></div>
-        <div class="online">● Cluster Active</div>
-    </div>
+    <script>
+        const API = "https://trick-a4if-advanced-ai-2.onrender.com"; 
 
-    <script src="script.js" defer></script>
+        async function send() {
+            const input = document.getElementById('userInput');
+            const msgsDiv = document.getElementById('msgs');
+            if(!input.value) return;
+
+            const text = input.value;
+            msgsDiv.innerHTML += `<div class="msg user">${text}</div>`;
+            input.value = "";
+            msgsDiv.scrollTop = msgsDiv.scrollHeight;
+
+            try {
+                const res = await fetch(`${API}/api/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ messages: [{role: "user", content: text}] })
+                });
+                const data = await res.json();
+                msgsDiv.innerHTML += `<div class="msg ai">🛡️ <b>ARIF:</b> ${data.reply}</div>`;
+                msgsDiv.scrollTop = msgsDiv.scrollHeight;
+            } catch (e) {
+                msgsDiv.innerHTML += `<div style="color:red; font-size:12px; text-align:center;">সার্ভার ব্যস্ত।</div>`;
+            }
+        }
+    </script>
 </body>
 </html>
