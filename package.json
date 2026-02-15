@@ -1,7 +1,7 @@
 {
   "name": "trick-a4if-advanced-ai",
-  "version": "3.0.0",
-  "description": "Public AI with IP Tracker by TRICK A4IF",
+  "version": "5.5.0",
+  "description": "Premium Tracker AI by TRICK A4IF",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
